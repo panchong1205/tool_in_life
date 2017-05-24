@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    (function () {
+
+//        document.getElementById("charge").type="hidden";
+	})();
+    function handlePeopleNum() {
+    	var num = document.getElementById("peopleNum").value;
+    	var names="<td>姓名</td>";
+    	var prices="<td>价格</td>";
+    	var results="<td>应付</td>";
+    	for(var i=0;i<num;i++){
+    		names+="<td><input type='text'></td>";
+			prices+="<td><input type='text' class='inputclass'></td>";
+			results+=" <td><p class='result'></p></td>";
+        }
+		names+="<td>配送费</td><td>优惠</td>";
+		prices+="<td><input type='text' id='input1'></td><td><input type='text' id='input2'></td>";
+		results+="<td></td><td></td>";
+		document.getElementById("tableHead").innerHTML=names;
+		document.getElementById("tableBody").innerHTML=prices;
+		document.getElementById("tableResults").innerHTML=results;
+		console.log(document.getElementById("charge").attributes);
+		document.getElementById("charge").removeAttribute("disabled") ;
+	}
+    function handleCharge(){
+		var deliverFee=document.getElementById("input1").value;
+		var benefit=document.getElementById("input2").value;
+		var inputs=document.getElementsByClassName("inputclass");
+		var persons=document.getElementById("peopleNum").value;
+		var mean=((benefit-deliverFee)/persons).toFixed(2);
+		for(var i=0;i<inputs.length;i++){
+			document.getElementsByClassName("result")[i].innerHTML=(inputs[i].value-mean);
+		}
+    }
+
+</script>
+<div>共<input type="number" id="peopleNum"/>人<button type="button" onclick="handlePeopleNum()">确定</button></div>
+<table>
+    <thead>
+    <tr id="tableHead">
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="tableBody">
+    </tr>
+    <tr id="tableResults">
+    </tr>
+    </tbody>
+</table>
+<button type="button" onclick="handleCharge()" disabled id="charge">计算</button>
+</body>
+</html>
