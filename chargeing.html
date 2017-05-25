@@ -16,7 +16,7 @@
     	var prices="<td>价格</td>";
     	var results="<td>应付</td>";
     	for(var i=0;i<num;i++){
-    		names+="<td><input type='text'></td>";
+    		names+="<td><input type='text' class='nameclass'></td>";
 			prices+="<td><input type='text' class='inputclass'></td>";
 			results+=" <td><p class='result'></p></td>";
         }
@@ -26,18 +26,21 @@
 		document.getElementById("tableHead").innerHTML=names;
 		document.getElementById("tableBody").innerHTML=prices;
 		document.getElementById("tableResults").innerHTML=results;
-		console.log(document.getElementById("charge").attributes);
 		document.getElementById("charge").removeAttribute("disabled") ;
 	}
     function handleCharge(){
+		var names="<td>姓名</td>";
 		var deliverFee=document.getElementById("input1").value;
 		var benefit=document.getElementById("input2").value;
 		var inputs=document.getElementsByClassName("inputclass");
 		var persons=document.getElementById("peopleNum").value;
 		var mean=((benefit-deliverFee)/persons).toFixed(2);
 		for(var i=0;i<inputs.length;i++){
+			names+="<td>"+document.getElementsByClassName("nameclass")[i].value+"</td>";
 			document.getElementsByClassName("result")[i].innerHTML=(inputs[i].value-mean);
 		}
+		names+="<td>配送费</td><td>优惠</td>";
+		document.getElementById("tableHead").innerHTML=names;
     }
 
 </script>
