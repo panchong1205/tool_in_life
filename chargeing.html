@@ -33,7 +33,7 @@
 		var mean=((benefit-deliverFee)/persons).toFixed(2);
 		for(var i=0;i<inputs.length;i++){
 			names+="<td>"+document.getElementsByClassName("nameclass")[i].value+"</td>";
-			document.getElementsByClassName("result")[i].innerHTML=(inputs[i].value-mean);
+			document.getElementsByClassName("result")[i].innerHTML=(inputs[i].value-mean).toFixed(2);
 		}
 		names+="<td>配送费</td><td>优惠</td>";
 		document.getElementById("tableHead").innerHTML=names;
