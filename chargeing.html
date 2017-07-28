@@ -16,7 +16,7 @@
 			prices+="<td><input type='text' class='inputclass'></td>";
 			results+=" <td><p class='result'></p></td>";
         }
-		names+="<td>配送费</td><td>优惠</td>";
+		names+="<td>配送＋打包</td><td>优惠</td>";
 		prices+="<td><input type='text' id='input1'></td><td><input type='text' id='input2'></td>";
 		results+="<td></td><td></td>";
 		document.getElementById("tableHead").innerHTML=names;
@@ -35,7 +35,7 @@
 			names+="<td>"+document.getElementsByClassName("nameclass")[i].value+"</td>";
 			document.getElementsByClassName("result")[i].innerHTML=(inputs[i].value-mean).toFixed(2);
 		}
-		names+="<td>配送费</td><td>优惠</td>";
+		names+="<td>配送＋打包</td><td>优惠</td>";
 		document.getElementById("tableHead").innerHTML=names;
     }
 
