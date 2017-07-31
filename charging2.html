@@ -38,12 +38,11 @@
 		document.getElementById("input4").innerHTML=total;
 		var prices=document.getElementsByClassName("price");
 		var persons=parseInt(document.getElementById("peopleNum").value);
-//		var mean=((benefit-deliverFee)/persons).toFixed(2);
 		for(var i=0;i<persons;i++){
 			names+="<td>"+document.getElementsByClassName("nameclass")[i].value+"</td>";
 			var ratio=parseFloat(prices[i].value)/total;
 			document.getElementsByClassName("ratio")[i].innerHTML=ratio.toFixed(4);
-			document.getElementsByClassName("result")[i].innerHTML=(pay*ratio).toFixed(1);
+			document.getElementsByClassName("result")[i].innerHTML=(pay*ratio).toFixed(2);
 		}
 		names+="<td>配送＋打包</td><td>优惠</td><td>优惠后支付</td><td>饭资总计</td>";
 		document.getElementById("tableHead").innerHTML=names;
