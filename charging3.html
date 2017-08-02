@@ -5,11 +5,32 @@
     <title>Title</title>
     <style>
         input{
-            width: 80px;
+            width: 90px;
+            outline: none;
+            border: none;
+            height:23px;
+        }
+        #peopleNum{
+            border: solid 1px #ccc;
+        }
+        button{
+            outline:none;
+            border:solid 1px #ccc;
+            background: none;
+            margin:0 5px;
+            border-radius: 2px!important;
+            cursor: pointer;
+            width:50px;
+            height:25px;
+            font-size: 14px;
         }
         table{
             text-align: center;
             line-height: 25px;
+        }
+        td{
+            border: solid 1px #ccc;
+            padding:0 10px;
         }
     </style>
 </head>
@@ -22,18 +43,18 @@
 		var ratio="<td>支付比例</td>";
 		var results="<td>个人应付</td>";
 		for(var i=0;i<num;i++){
-			names+="<td><input type='text' class='nameclass'></td>";
-			prices+="<td><input type='text' class='price addInput'></td>";
+			names+="<td><input type='text' class='nameclass' placeholder='输入姓名'></td>";
+			prices+="<td><input type='text' class='price addInput' placeholder='注意用英文字符'></td>";
 			ratio+="<td><p class='ratio'></p></td>"
 			results+=" <td><p class='result'></p></td>";
 		}
 		names+="<td>配送＋打包</td><td>优惠</td><td>优惠后支付</td><td>优惠前总价</td>";
-		prices+="<td><input type='text' class='addInput' id='input1'></td>" +
-            "<td><input type='text' class='addInput' id='input2'></td>" +
-            "<td><input type='text' class='addInput' id='input3'></td>" +
-            "<td><p id='input4'></p></td>";
+		prices+="<td><input type='text' class='addInput' id='input1' placeholder='注意用英文字符'></td>" +
+            "<td><input type='text' class='addInput' id='input2' placeholder='注意用英文字符'></td>" +
+            "<td><input type='text' class='addInput' id='input3' placeholder='注意用英文字符'></td>" +
+            "<td><p id='totalPrice'></p></td>";
 		ratio+="<td></td><td></td><td></td><td></td>";
-		results+="<td></td><td></td><td></td><td></td>";
+		results+="<td></td><td></td><td id='testPay'></td><td></td>";
 		document.getElementById("tableHead").innerHTML=names;
 		document.getElementById("tablePrice").innerHTML=prices;
 		document.getElementById("tableRatio").innerHTML=ratio;
@@ -54,28 +75,29 @@
 				addInputs[j].value = totalVal;
             }
         }
-		var names="<td>姓名</td>";
 		var deliverFee=parseFloat(document.getElementById("input1").value);//配送费
 		var benefit=parseFloat(document.getElementById("input2").value);//优惠
 		var pay=parseFloat(document.getElementById("input3").value);//优惠后支付
 		var total=pay + benefit - deliverFee;//优惠前商品总价
 		console.log(total);
-		document.getElementById("input4").innerHTML=total;
 		var prices=document.getElementsByClassName("price");
 		var persons=parseInt(document.getElementById("peopleNum").value);
+		var testPay = 0;
+		var testTotal = 0;
 		for(var i=0;i<persons;i++){
-			names+="<td>"+document.getElementsByClassName("nameclass")[i].value+"</td>";
 			var ratio=parseFloat(prices[i].value)/total;//计算支付比例
 			document.getElementsByClassName("ratio")[i].innerHTML=ratio.toFixed(4);
 			document.getElementsByClassName("result")[i].innerHTML=(pay*ratio).toFixed(2);//计算个人实际支付
+			testPay += parseFloat((pay*ratio).toFixed(2));
+			testTotal += parseFloat(prices[i].value);
 		}
-		names+="<td>配送＋打包</td><td>优惠</td><td>优惠后支付</td><td>优惠前总价</td>";
-		document.getElementById("tableHead").innerHTML=names;
+		document.getElementById("totalPrice").innerHTML=total+'('+testTotal+')';
+		document.getElementById("testPay").innerHTML=testPay;
 	}
 
 </script>
 <div>共<input type="number" id="peopleNum"/>人<button type="button" onclick="handlePeopleNum()">确定</button></div>
-<table>
+<table cellspacing="0" cellpadding="0">
     <thead>
     <tr id="tableHead">
     </tr>
