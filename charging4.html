@@ -10,7 +10,7 @@
             border: none;
             height:23px;
         }
-        #peopleNum{
+        #peopleNum,  #payName{
             border: solid 1px #ccc;
         }
         button{
@@ -32,6 +32,10 @@
             border: solid 1px #ccc;
             padding:0 10px;
         }
+        #payCode{
+            width: 250px;
+            height: 400px;
+        }
     </style>
 </head>
 <body>
@@ -50,9 +54,9 @@
 		}
 		names+="<td>配送＋打包</td><td>优惠</td><td>优惠后支付</td><td>优惠前总价</td>";
 		prices+="<td><input type='text' class='addInput' id='input1' placeholder='注意用英文字符'></td>" +
-			"<td><input type='text' class='addInput' id='input2' placeholder='注意用英文字符'></td>" +
-			"<td><input type='text' class='addInput' id='input3' placeholder='注意用英文字符'></td>" +
-			"<td><p id='totalPrice'></p></td>";
+            "<td><input type='text' class='addInput' id='input2' placeholder='注意用英文字符'></td>" +
+            "<td><input type='text' class='addInput' id='input3' placeholder='注意用英文字符'></td>" +
+            "<td><p id='totalPrice'></p></td>";
 		ratio+="<td></td><td></td><td></td><td></td>";
 		results+="<td></td><td></td><td id='testPay'></td><td></td>";
 		document.getElementById("tableHead").innerHTML=names;
@@ -63,18 +67,18 @@
 	}
 	function handleCharge(){
 //		允许价格输入框里输入加法公式
-		var addInputs=document.getElementsByClassName("addInput");
-		for(var j=0;j<addInputs.length;j++){
+        var addInputs=document.getElementsByClassName("addInput");
+        for(var j=0;j<addInputs.length;j++){
 			if(addInputs[j].value.indexOf('+') >= 0){
 				console.log('包含＋');
 				var values = addInputs[j].value.split("+");
 				var totalVal = 0;
 				values.map(function(value, key){
 					totalVal += parseFloat(value);
-				});
+                });
 				addInputs[j].value = totalVal;
-			}
-		}
+            }
+        }
 		var deliverFee=parseFloat(document.getElementById("input1").value);//配送费
 		var benefit=parseFloat(document.getElementById("input2").value);//优惠
 		var pay=parseFloat(document.getElementById("input3").value);//优惠后支付
@@ -94,7 +98,9 @@
 		document.getElementById("totalPrice").innerHTML=total+'('+testTotal+')';
 		document.getElementById("testPay").innerHTML=testPay;
 	}
-
+	function findPayCode() {
+        document.getElementById('payCode').setAttribute('src', 'image/'+document.getElementById('payName').value+'.png');
+	}
 </script>
 <div>共<input type="number" id="peopleNum"/>人<button type="button" onclick="handlePeopleNum()">确定</button></div>
 <table cellspacing="0" cellpadding="0">
@@ -112,5 +118,7 @@
     </tbody>
 </table>
 <button type="button" onclick="handleCharge()" disabled id="charge">计算</button>
+<p>向<input type="text" id="payName" placeholder="收款人姓名"/><button onclick="findPayCode()">付款</button></p>
+<img src="" id="payCode" alt="在上方输入框填写收款人姓名">
 </body>
 </html>
