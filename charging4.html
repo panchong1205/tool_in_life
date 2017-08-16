@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--带收钱码-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,13 +91,13 @@
 		var testTotal = 0;
 		for(var i=0;i<persons;i++){
 			var ratio=parseFloat(prices[i].value)/total;//计算支付比例
-			document.getElementsByClassName("ratio")[i].innerHTML=ratio.toFixed(4);
+			document.getElementsByClassName("ratio")[i].innerHTML=ratio;
 			document.getElementsByClassName("result")[i].innerHTML=(pay*ratio).toFixed(2);//计算个人实际支付
 			testPay += parseFloat((pay*ratio).toFixed(2));
 			testTotal += parseFloat(prices[i].value);
 		}
 		document.getElementById("totalPrice").innerHTML=total+'('+testTotal+')';
-		document.getElementById("testPay").innerHTML=testPay;
+		document.getElementById("testPay").innerHTML=testPay.toFixed(2);
 	}
 	function findPayCode() {
         document.getElementById('payCode').setAttribute('src', 'image/'+document.getElementById('payName').value+'.png');
