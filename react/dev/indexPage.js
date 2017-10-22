@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {InputNumber, Input, Button, Select} from 'antd';
 
 const Option = Select.Option;
@@ -14,8 +15,33 @@ export default class IndexPage extends React.Component {
 			priceTotal: '',
 			paySum: '',
 			picName: '',
+            timer: null,
 		};
 	}
+	componentDidMount(){
+		const today = moment().format('YYYY-MM-DD');
+		const start = Number.parseInt(moment(`${today} 09:00:00`).format('X'));
+		const end = Number.parseInt(moment(`${today} 18:00:00`).format('X'));
+		this.state.timer = setInterval(() => {
+			const current = Number.parseInt(moment().format('X'));
+			if (current >= start) {
+				let hour = Number.parseInt((end - current) / 3600);
+				hour = hour < 10 ? '0' + hour : hour;
+				let minute = Number.parseInt(((end - current) % 3600) / 60);
+                minute = minute < 10 ? '0' + minute : minute;
+                let seconds = Number.parseInt(((end - current) % 3600) % 60);
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                console.log(`${hour}:${minute}:${seconds}`);
+			} else if (current >= end) {
+
+			}
+		}, 1000);
+	}
+    componentWillUnmount() {
+        if (this.state.timer != null) {
+            clearInterval(this.state.timer);
+        }
+    }
 	peopleItem = () => {
 		return {
 			name: '',
@@ -94,7 +120,7 @@ export default class IndexPage extends React.Component {
 				<tr>
 					<td>姓名</td>
 					{
-						this.state.content.map((item, index) => <td>
+						this.state.content.map((item, index) => <td key={`name${index}`}>
 							<Input value={item.name} placeholder="输入姓名或菜名" onChange={args => this.changeContent('name', index, args)}/>
 						</td>)
 					}
@@ -106,7 +132,7 @@ export default class IndexPage extends React.Component {
 				<tr>
 					<td>价格</td>
 					{
-						this.state.content.map((item, index) => <td>
+						this.state.content.map((item, index) => <td key={`price${index}`}>
 							<Input value={item.price} placeholder="可输入1+2+3格式" onChange={args => this.changeContent('price', index, args)}/>
 						</td>)
 					}
@@ -118,7 +144,7 @@ export default class IndexPage extends React.Component {
 				<tr>
 					<td>支付比例</td>
 					{
-						this.state.content.map(item => <td>{item.ratio}</td>)
+						this.state.content.map((item, index)=> <td key={`ratio${index}`}>{item.ratio}</td>)
 					}
 					<td></td>
 					<td></td>
@@ -128,7 +154,7 @@ export default class IndexPage extends React.Component {
 				<tr>
 					<td>个人应付</td>
 					{
-						this.state.content.map(item => <td>{item.pay}</td>)
+						this.state.content.map((item, index) => <td key={`pay${index}`}>{item.pay}</td>)
 					}
 					<td></td>
 					<td></td>
@@ -147,9 +173,8 @@ export default class IndexPage extends React.Component {
 				付款
 			</div>
 			{
-				!this.state.picName ? <img src={`images/waimai.gif`} width={300}/> : null
+				!this.state.picName ? <img src={`images/waimai.gif`} width={300}/> : <img src={`images/${this.state.picName}.png`} width={300}/>
 			}
-			<img src={`images/${this.state.picName}.png`} width={300}/>
 		</div>);
 	}
 }
