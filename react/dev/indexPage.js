@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import {InputNumber, Input, Button, Select} from 'antd';
+import {InputNumber, Input, Button, Select, Modal} from 'antd';
 
 const Option = Select.Option;
 export default class IndexPage extends React.Component {
@@ -19,6 +19,10 @@ export default class IndexPage extends React.Component {
 		};
 	}
 	componentDidMount(){
+        Modal.success({
+            title: '下班倒计时功能即将上线，敬请期待！',
+            content: '',
+        });
 		const today = moment().format('YYYY-MM-DD');
 		const start = Number.parseInt(moment(`${today} 09:00:00`).format('X'));
 		const end = Number.parseInt(moment(`${today} 18:00:00`).format('X'));
