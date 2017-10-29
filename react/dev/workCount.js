@@ -38,12 +38,18 @@ export class Content extends React.Component{
             } else if (current > end) {
                 console.log('下班了');
                 clearInterval(this.state.timer);
+                this.setState({
+                    timer: null,
+                });
             }
         }, 1000);
     }
     componentWillUnmount() {
         if (this.state.timer != null) {
             clearInterval(this.state.timer);
+            this.setState({
+                timer: null,
+            });
         }
     }
     render() {
@@ -53,6 +59,9 @@ export class Content extends React.Component{
                 <h1>
                     {this.state.time}
                 </h1>
+                {
+                    this.state.timer === null ? <img src={`images/workEnd.gif`} width={300} /> : null
+                }
             </div>
         );
     }
