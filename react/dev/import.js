@@ -1,6 +1,7 @@
 // import less
 import '../less/main.less';
 import '../less/flex.less';
-import './indexPage.less';
+import './waimai.less';
+import './selectHard.less';
 
 // import image

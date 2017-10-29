@@ -1,9 +1,19 @@
 import React from 'react';
-import moment from 'moment';
-import {InputNumber, Input, Button, Select, Modal} from 'antd';
+import { InputNumber, Input, Button, Select } from 'antd';
+import Sider from './sider';
 
 const Option = Select.Option;
-export default class IndexPage extends React.Component {
+export default class WaiMai extends React.Component{
+	render() {
+		return (
+			<div className="flex_row_start flex_vertical_top">
+				<Sider keys={['1']} />
+				<WaiMaiItem />
+			</div>
+		);
+	}
+}
+export class WaiMaiItem extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -15,37 +25,8 @@ export default class IndexPage extends React.Component {
 			priceTotal: '',
 			paySum: '',
 			picName: '',
-            timer: null,
 		};
 	}
-	componentDidMount(){
-        Modal.success({
-            title: '下班倒计时功能即将上线，敬请期待！',
-            content: '',
-        });
-		const today = moment().format('YYYY-MM-DD');
-		const start = Number.parseInt(moment(`${today} 09:00:00`).format('X'));
-		const end = Number.parseInt(moment(`${today} 18:00:00`).format('X'));
-		this.state.timer = setInterval(() => {
-			const current = Number.parseInt(moment().format('X'));
-			if (current >= start) {
-				let hour = Number.parseInt((end - current) / 3600);
-				hour = hour < 10 ? '0' + hour : hour;
-				let minute = Number.parseInt(((end - current) % 3600) / 60);
-                minute = minute < 10 ? '0' + minute : minute;
-                let seconds = Number.parseInt(((end - current) % 3600) % 60);
-                seconds = seconds < 10 ? '0' + seconds : seconds;
-                console.log(`${hour}:${minute}:${seconds}`);
-			} else if (current >= end) {
-
-			}
-		}, 1000);
-	}
-    componentWillUnmount() {
-        if (this.state.timer != null) {
-            clearInterval(this.state.timer);
-        }
-    }
 	peopleItem = () => {
 		return {
 			name: '',
