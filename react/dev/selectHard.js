@@ -71,7 +71,7 @@ export class Content extends React.Component{
                 <div className="flex_row_center flex_vertical_middle">
                     逐个添加让你纠结的选项：
                     <Input value={this.state.option} onChange={this.handleChange} style={{ width: 220 }} onKeyDown={this.handleKeyDown} />
-                    <a onClick={this.add}>添加</a>
+                    回车或点击<a onClick={this.add}>添加</a>
                 </div>
                 {
                     this.state.optionList.length > 0 ?  <div className="optionList flex_row_center flex_vertical_middle">
