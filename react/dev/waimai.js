@@ -64,23 +64,14 @@ export class WaiMaiItem extends React.Component {
 	};
 	handleCharge = () => {
 		let content = this.state.content;
-		let priceTotal = parseFloat(this.state.payTotal) + parseFloat(this.state.discount) - parseFloat(this.state.freight);
-		let payTotal = parseFloat(this.state.payTotal);
+        let payTotal = this.addOneByOne(this.state.payTotal);
+        let discount = this.addOneByOne(this.state.discount);
+        let freight = this.addOneByOne(this.state.freight);
+		let priceTotal = payTotal + discount - freight;
 		let priceSum = 0;
 		let paySum = 0;
 		content = content.map(item => {
-			const addStr='+' || '＋';
-			if(item.price.includes(addStr)){
-				console.log('包含＋');
-				const values = item.price.split("+");
-				let totalVal = 0;
-				values.map(value => {
-					totalVal += parseFloat(value);
-				});
-				item.price = totalVal;
-			} else {
-				item.price = parseFloat(item.price);
-			}
+            item.price = this.addOneByOne(item.price);
 			item.ratio = parseFloat(item.price/priceTotal).toFixed(4);
 			item.pay = parseFloat(item.ratio * payTotal).toFixed(2);
 			paySum += parseFloat(item.pay);
@@ -92,6 +83,20 @@ export class WaiMaiItem extends React.Component {
 			priceTotal: `${priceTotal}(${priceSum})`,
 			paySum,
 		});
+	};
+	addOneByOne = num => {
+        const addStr='+' || '＋';
+        if(num.includes(addStr)){
+            console.log('包含＋');
+            const values = num.split("+");
+            let totalVal = 0;
+            values.map(value => {
+                totalVal += parseFloat(value);
+            });
+            return totalVal;
+        } else {
+            return parseFloat(num);
+        }
 	};
 	render() {
 		return (<div className="page">
