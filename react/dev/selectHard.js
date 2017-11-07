@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input, message } from 'antd';
+import { Button, Input, message, Icon } from 'antd';
 import Sider from './sider';
 
 export default class SelectHard extends React.Component {
@@ -41,6 +41,13 @@ export class Content extends React.Component{
             option: '',
         });
     };
+    del = item => {
+        const optionList = new Set(this.state.optionList);
+        optionList.delete(item);
+        this.setState({
+            optionList: [...optionList],
+        });
+    };
     decide = () => {
         const min = 1;
         const max = this.state.optionList.length;
@@ -77,7 +84,10 @@ export class Content extends React.Component{
                     this.state.optionList.length > 0 ?  <div className="optionList flex_row_center flex_vertical_middle">
                         你的纠结列表：
                         {
-                            this.state.optionList.map(item => <div className="item" key={item}>{item}</div>)
+                            this.state.optionList.map(item => <div className="item" key={item}>
+                                {item}
+                                <Icon type="close" style={{ color: 'red'}} onClick={() => this.del(item)} />
+                                </div>)
                         }
                         <Button type={'primary'} onClick={this.decide} disabled={this.state.optionList.length < 2}>抽签</Button>
                     </div> : null
