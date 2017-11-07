@@ -158,7 +158,6 @@ export class WaiMaiItem extends React.Component {
 				向
 				<Select value={this.state.picName} onChange={args => this.handleState('picName', args)} style={{width: 100}}>
 					<Option value="">选择收款人</Option>
-
 				</Select>
 				付款
 			</div>
