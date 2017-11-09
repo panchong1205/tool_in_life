@@ -8,6 +8,7 @@ import App from './dev/app';
 import WaiMai from './dev/waimai';
 import WorkCount from './dev/workCount';
 import SelectHard from './dev/selectHard';
+import Award from './dev/award';
 import './dev/import';
 
 const main = () => {
@@ -17,6 +18,7 @@ const main = () => {
 				<IndexRoute component={WaiMai} />
 				<Route path={'/workCount'} component={WorkCount} />
 				<Route path={'/selectHard'} component={SelectHard} />
+				<Route path={'/award'} component={Award} />
 			</Route>
 		</Router>),
 	document.getElementById('root'),
