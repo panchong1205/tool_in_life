@@ -19,10 +19,10 @@ export class WaiMaiItem extends React.Component {
 		this.state = {
 			content: new Array(2).fill(this.peopleItem()),
 			peopleNum: 2,
-			freight: '',
-			discount: '',
-			payTotal: '',
-			priceTotal: '',
+            freight: '', // 配送打包费
+            discount: '', // 优惠金额
+            payTotal: '', // 实际支付
+            priceTotal: '', // 商品实原价总和
 			paySum: '',
 			picName: '',
 		};
@@ -79,9 +79,12 @@ export class WaiMaiItem extends React.Component {
 			return item;
 		});
 		this.setState({
-			content,
-			priceTotal: `${priceTotal}(${priceSum})`,
-			paySum,
+            content,
+            priceTotal: `${priceTotal.toFixed(2)}(${priceSum.toFixed(2)})`,
+            paySum: paySum.toFixed(2),
+            discount: discount.toFixed(2),
+            freight: freight.toFixed(2), // 配送打包费
+            payTotal: payTotal.toFixed(2), // 实际支付
 		});
 	};
 	addOneByOne = num => {
