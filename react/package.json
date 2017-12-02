@@ -4,7 +4,7 @@
   "description": "new",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack-dev-server --port 9090 --inline --hot --content-base . --history-api-fallback"
+    "start": "webpack-dev-server --inline --hot --content-base . --history-api-fallback"
   },
   "author": "",
   "license": "ISC",
