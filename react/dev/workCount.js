@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { Input, Button } from 'antd';
 import Sider from './sider';
 
 export default class WorkCount extends React.Component{
@@ -17,11 +18,16 @@ export class Content extends React.Component{
     state = {
         timer: null,
         time: '00:00:00',
+        start: '09:00:00',
+        end: '18:00:00',
     };
     componentDidMount(){
+        this.count();
+    }
+    count = () => {
         const today = moment().format('YYYY-MM-DD');
-        const start = Number.parseInt(moment(`${today} 09:00:00`).format('X'));
-        const end = Number.parseInt(moment(`${today} 18:00:00`).format('X'));
+        const start = Number.parseInt(moment(`${today} ${this.state.start}`).format('X'));
+        const end = Number.parseInt(moment(`${today} ${this.state.end}`).format('X'));
         this.state.timer = setInterval(() => {
             const current = Number.parseInt(moment().format('X'));
             if (current >= start && current <= end) {
@@ -43,7 +49,7 @@ export class Content extends React.Component{
                 });
             }
         }, 1000);
-    }
+    };
     componentWillUnmount() {
         if (this.state.timer != null) {
             clearInterval(this.state.timer);
@@ -52,9 +58,18 @@ export class Content extends React.Component{
             });
         }
     }
+    handleState = (name, e) => {
+        const value = e.target ? e.target.value : e;
+        this.setState({
+            [name]: value,
+        });
+    };
     render() {
         return (
             <div className="page">
+                上班时间：<Input style={{ width: 120 }} value={this.state.start} onChange={args => this.handleState('start', args)} />
+                下班时间：<Input style={{ width: 120 }} value={this.state.end} onChange={args => this.handleState('end', args)} />
+                <Button onClick={this.count}>开始计时</Button>
                 <h3>距离下班还有</h3>
                 <h1>
                     {this.state.time}
