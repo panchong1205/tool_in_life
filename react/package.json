@@ -34,6 +34,7 @@
     "babel-plugin-transform-object-assign": "6.22.0",
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-stage-0": "6.22.0",
+    "clean-webpack-plugin": "^0.1.17",
     "copy-webpack-plugin": "4.0.1",
     "file-loader": "0.10.0",
     "html-webpack-plugin": "2.28.0",
