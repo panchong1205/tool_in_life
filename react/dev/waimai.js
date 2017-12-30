@@ -87,18 +87,18 @@ export class WaiMaiItem extends React.Component {
             payTotal: payTotal.toFixed(2), // 实际支付
 		});
 	};
-	addOneByOne = num => {
+	addOneByOne = (num = '0') => {
         const addStr='+' || '＋';
         if(num.includes(addStr)){
             console.log('包含＋');
             const values = num.split("+");
             let totalVal = 0;
             values.map(value => {
-                totalVal += parseFloat(value);
+                totalVal += Number.parseFloat(value);
             });
             return totalVal;
         } else {
-            return parseFloat(num);
+            return Number.parseFloat(num);
         }
 	};
 	render() {

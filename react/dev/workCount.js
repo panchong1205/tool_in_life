@@ -37,18 +37,17 @@ export class Content extends React.Component{
                 minute = minute < 10 ? '0' + minute : minute;
                 let seconds = Number.parseInt(((end - current) % 3600) % 60);
                 seconds = seconds < 10 ? '0' + seconds : seconds;
-                console.log(`${hour}:${minute}:${seconds}`);
-                this.setState({
-                    time: `${hour}:${minute}:${seconds}`,
-                })
+                this.updateTime('time', `${hour}:${minute}:${seconds}`);
             } else if (current > end) {
-                console.log('下班了');
                 clearInterval(this.state.timer);
-                this.setState({
-                    timer: null,
-                });
+                this.updateTime('timer', null);
             }
         }, 1000);
+    };
+    updateTime = (name, time) => {
+        this.setState({
+            [name]: time,
+        });
     };
     componentWillUnmount() {
         if (this.state.timer != null) {
