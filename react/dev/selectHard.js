@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button, Input, message, Icon } from 'antd';
-import Sider from './sider';
+import Header from './header';
 
 export default class SelectHard extends React.Component {
     render() {
         return (
             <div className="flex_row_start flex_vertical_top">
-                <Sider keys={['3']} />
+                <Header keys={['3']} />
                 <Content />
             </div>
         );

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Input, Button, Select, Icon, message } from 'antd';
-import Sider from './sider';
+import Header from './header';
 
 const Option = Select.Option;
 export default class Award extends React.Component{
     render() {
         return (
             <div className="flex_row_start flex_vertical_top">
-                <Sider keys={['4']} />
+                <Header keys={['4']} />
                 <Content />
             </div>
         );

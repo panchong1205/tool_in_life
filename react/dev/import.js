@@ -9,3 +9,4 @@ import './award.less';
 import '../images/favicon.png';
 import '../images/waimai.gif';
 import '../images/workEnd.gif';
+import '../images/defaultImage.png';

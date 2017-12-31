@@ -1,13 +1,13 @@
 import React from 'react';
 import { InputNumber, Input, Button, Select } from 'antd';
-import Sider from './sider';
+import Header from './header';
 
 const Option = Select.Option;
 export default class WaiMai extends React.Component{
 	render() {
 		return (
 			<div className="flex_row_start flex_vertical_top">
-				<Sider keys={['1']} />
+				<Header keys={['1']} />
 				<WaiMaiItem />
 			</div>
 		);
@@ -87,7 +87,7 @@ export class WaiMaiItem extends React.Component {
             payTotal: payTotal.toFixed(2), // 实际支付
 		});
 	};
-	addOneByOne = (num = '0') => {
+	addOneByOne = num => {
         const addStr='+' || '＋';
         if(num.includes(addStr)){
             console.log('包含＋');

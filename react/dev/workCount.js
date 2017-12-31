@@ -1,13 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 import { Input, Button } from 'antd';
-import Sider from './sider';
+import Header from './header';
 
 export default class WorkCount extends React.Component{
     render() {
         return (
             <div className="flex_row_start flex_vertical_top">
-                <Sider keys={['2']} />
+                <Header keys={['2']} />
                 <Content />
             </div>
         );
@@ -37,17 +37,12 @@ export class Content extends React.Component{
                 minute = minute < 10 ? '0' + minute : minute;
                 let seconds = Number.parseInt(((end - current) % 3600) % 60);
                 seconds = seconds < 10 ? '0' + seconds : seconds;
-                this.updateTime('time', `${hour}:${minute}:${seconds}`);
+                this.handleState('time', `${hour}:${minute}:${seconds}`);
             } else if (current > end) {
                 clearInterval(this.state.timer);
-                this.updateTime('timer', null);
+                this.handleState('timer', null);
             }
         }, 1000);
-    };
-    updateTime = (name, time) => {
-        this.setState({
-            [name]: time,
-        });
     };
     componentWillUnmount() {
         if (this.state.timer != null) {

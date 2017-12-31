@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Menu, Icon } from 'antd';
 
-export default class Sider extends React.Component{
+export default class Header extends React.Component{
     render() {
         return (
             <Menu
