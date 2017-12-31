@@ -88,6 +88,8 @@ export class WaiMaiItem extends React.Component {
 		});
 	};
 	addOneByOne = num => {
+		console.log(num);
+		num = num.toString().trim() ? num.toString().trim() : '0';
         const addStr='+' || '＋';
         if(num.includes(addStr)){
             console.log('包含＋');
