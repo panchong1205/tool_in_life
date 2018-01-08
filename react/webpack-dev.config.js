@@ -4,8 +4,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -39,14 +37,6 @@ module.exports = {
             filename: 'index.html',
             template: path.join(__dirname, '/index-tmpl.html'),
         }),
-        new CleanWebpackPlugin(
-            ['dist/js', 'dist/css' ], // 匹配删除的文件
-            {
-                root: __dirname,  // 根目录
-                verbose: true,   // 开启在控制台输出信息
-                dry: false,   // 启用删除文件
-            }
-        ),
     ],
     devtool: '#source-map',
 };
