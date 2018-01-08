@@ -28,6 +28,9 @@ export class Content extends React.Component{
         const today = moment().format('YYYY-MM-DD');
         const start = Number.parseInt(moment(`${today} ${this.state.start}`).format('X'));
         const end = Number.parseInt(moment(`${today} ${this.state.end}`).format('X'));
+        if (this.state.timer != null) {
+            clearInterval(this.state.timer);
+        }
         this.state.timer = setInterval(() => {
             const current = Number.parseInt(moment().format('X'));
             if (current >= start && current <= end) {
