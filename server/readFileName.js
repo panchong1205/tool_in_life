@@ -25,7 +25,6 @@ const findSync = startPath => {
 
     }
     finder(startPath);
-    console.log(result);
     fs.writeFileSync('test.html', imgStr); //写入指定的文件
     return result;
 }
