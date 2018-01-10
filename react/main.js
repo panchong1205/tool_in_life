@@ -14,7 +14,7 @@ import Award from './dev/award';
 import './dev/component/import';
 
 const main = () => {
-	if (moment().format('X') >= moment('2018-01-02').format('X') && moment().format('X') <= moment('2018-01-05').format('X')) {
+	if (moment().format('X') >= moment('2018-01-02').format('X') && moment().format('X') <= moment('2018-01-31').format('X')) {
         Modal.info({
             title: '外卖计算器修复了新的bug',
             content: (

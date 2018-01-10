@@ -1,5 +1,6 @@
 /**created by panchong on 2017/11/28**/
 const fs = require('fs');
+const  join = require('path').join;
 
 //异步读取文件
 fs.readFile('test.txt', 'utf-8', (err, data) => {
@@ -13,7 +14,7 @@ fs.readFile('test.txt', 'utf-8', (err, data) => {
 
 // 同步读取文件
 try {
-    const data = fs.readFileSync('test.txt', 'utf-8');
+    const data = fs.readFileSync('test.html', 'utf-8');
     console.log('同步', data);
 } catch (err) {
     // 出错了
@@ -57,4 +58,3 @@ fs.statSync('writeSync.txt', (err, stat) => {
         }
     }
 });
-console.log('成功了');
