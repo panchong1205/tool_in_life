@@ -5,6 +5,6 @@
 git clone git@github.com:panchong1205/tool_in_life.git
 cd tool_in_life/react
 npm install
-npm start
+npm run dev
 localhost:8080
 ```
