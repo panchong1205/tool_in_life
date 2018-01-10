@@ -2,6 +2,7 @@
  * Created by panchong on 16/12/28.
  */
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -31,6 +32,9 @@ module.exports = {
 
     },
     plugins: [
+        new webpack.DefinePlugin({
+            DEV_STATE: JSON.stringify(JSON.parse(process.env.DEV || 'false'))
+        }),
         new ExtractTextPlugin('css/[id].[hash].css'),
         new HtmlWebpackPlugin({
             chunks: ['front'],

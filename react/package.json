@@ -4,8 +4,9 @@
   "description": "new",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "webpack-dev-server --config webpack-dev.config.js --inline --hot --content-base . --history-api-fallback",
-    "webpack": "webpack --config webpack-dist.config.js"
+    "dev": "env DEV=true webpack-dev-server --config webpack-dev.config.js --inline --hot --content-base . --history-api-fallback",
+    "webpack": "env DEV=false webpack --config webpack-dist.config.js",
+    "testWebpack": "env DEV=true webpack --config webpack-dist.config.js"
   },
   "author": "",
   "license": "ISC",

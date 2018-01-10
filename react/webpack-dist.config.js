@@ -1,12 +1,12 @@
 
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
-
 module.exports = {
     entry: {
         front: './main.js',
@@ -33,6 +33,9 @@ module.exports = {
 
     },
     plugins: [
+        new webpack.DefinePlugin({
+            DEV_STATE: JSON.stringify(JSON.parse(process.env.DEV || 'false'))
+        }),
         new ExtractTextPlugin('css/[id].[hash].css'),
         new HtmlWebpackPlugin({
             chunks: ['front'],
