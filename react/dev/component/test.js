@@ -12,6 +12,12 @@ export default class ComponentTest extends React.Component{
         aLink.href = canvas.toDataURL("image/png");
         aLink.dataset.downloadurl = [MIME_TYPE, aLink.href].join(':');
     };
+    componentDidUpdate() {
+        const canvas = document.getElementsByTagName('canvas')[0];
+        const ctx = canvas.getContext('2d');
+        const img = document.getElementById('logo');
+        ctx.drawImage(img, 0, 0, 32, 32, 48, 48, 20,20);
+    }
     render() {
         return <div>
             <Header keys={['5']} />
@@ -22,6 +28,7 @@ export default class ComponentTest extends React.Component{
             <a id="code1" onClick={this.handleDownload}>
                 下载二维码
             </a>
+            <img src="images/favicon.png" alt="" id="logo"/>
         </div>
     }
 }
