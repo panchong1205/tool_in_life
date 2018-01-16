@@ -11,7 +11,7 @@ const findSync = startPath => {
         files.forEach((val,index) => {
             console.log(val);// 图片名
             let fPath=join(path,val);
-            let str = '<div class="swiper-slide"><img class="contentImg" src="./'+ fPath + '" alt=""></div>';
+            let str = '<div class="swiper-slide"><img class="contentImg" src="./'+ fPath + '?m=' + Math.random() +'" alt=""></div>';
             imgStr += str;  //指定写入的格式
             // let stats=fs.statSync(val);
             // if(stats.isDirectory()) {
@@ -28,4 +28,4 @@ const findSync = startPath => {
     fs.writeFileSync('test.html', imgStr); //写入指定的文件
     return result;
 }
-findSync('./testImage/'); //指定路径
+findSync('./57/'); //指定路径
