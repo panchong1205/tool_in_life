@@ -11,6 +11,7 @@ import WaiMai from './dev/waimai';
 import WorkCount from './dev/workCount';
 import SelectHard from './dev/selectHard';
 import Award from './dev/award';
+import ComponentTest from './dev/component/test';
 import './dev/component/import';
 
 const main = () => {
@@ -33,6 +34,7 @@ const main = () => {
 				<Route path={'/workCount'} component={WorkCount} />
 				<Route path={'/selectHard'} component={SelectHard} />
 				<Route path={'/award'} component={Award} />
+				<Route path={'/componentTest'} component={ComponentTest} />
 			</Route>
 		</Router>),
 	document.getElementById('root'),
