@@ -1,7 +1,7 @@
 /**created by panchong on 2018/1/16**/
 import React from 'react';
 import QRCode from 'qrcode.react';
-import Header from '../header';
+import Header from './header';
 
 export default class ComponentTest extends React.Component{
     handleDownload = () => {
@@ -28,7 +28,7 @@ export default class ComponentTest extends React.Component{
             <a id="code1" onClick={this.handleDownload}>
                 下载二维码
             </a>
-            <img src="images/favicon.png" alt="" id="logo"/>
+            <img src="images/favicon.png" alt="" id="logo" width={100}/>
         </div>
     }
 }

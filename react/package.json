@@ -4,7 +4,7 @@
   "description": "new",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "env DEV=true webpack-dev-server --config webpack-dev.config.js --inline --hot --content-base . --history-api-fallback",
+    "dev": "env DEV=true webpack-dev-server --port 9090 --config webpack-dev.config.js --inline --hot --content-base . --history-api-fallback",
     "webpack": "env DEV=false webpack --config webpack-dist.config.js",
     "testWebpack": "env DEV=true webpack --config webpack-dist.config.js"
   },

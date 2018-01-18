@@ -11,7 +11,7 @@ import WaiMai from './dev/waimai';
 import WorkCount from './dev/workCount';
 import SelectHard from './dev/selectHard';
 import Award from './dev/award';
-import ComponentTest from './dev/component/test';
+import ComponentTest from './dev/componentTest';
 import './dev/component/import';
 
 const main = () => {
