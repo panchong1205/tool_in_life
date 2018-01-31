@@ -37,6 +37,13 @@ export default class ComponentTest extends React.Component{
         const coordinateArray = new Set(this.state.coordinateArray);
         coordinate.getNeedXY().then(data => {
             if (typeof data !== 'undefined') {
+                if (coordinateArray.has(JSON.stringify(data))) {
+                    coordinateArray.delete(JSON.stringify(data));
+                    this.setState({
+                        coordinateArray: [...coordinateArray],
+                    });
+                    return;
+                }
                 coordinateArray.add(JSON.stringify(data));
                 this.setState({
                     coordinateArray: [...coordinateArray],
