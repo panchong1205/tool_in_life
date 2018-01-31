@@ -24,7 +24,7 @@ module.exports = {
             use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }),
         }, {
             test: /\.(jpg|png|gif)$/,
-            use: ['file-loader?name=images/[name].[ext]'],
+            use: ['file-loader?name=images/[name].[hash].[ext]'],
         }, {
             test: /\.(eot|woff|woff2|ttf|svg)$/,
             use: ['file-loader?name=fonts/[name].[ext]'],

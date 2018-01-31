@@ -1,0 +1,43 @@
+<!--鼠标实现在canvas上画线-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #writeCanvas{
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="writeCanvas" width="400" height="400"></canvas>
+<script>
+    var writeCanvas = document.getElementById("writeCanvas");
+    var writeCxt = writeCanvas.getContext("2d");
+    writeCxt.fillStyle = "#999999";
+    writeCxt.strokeStyle = "#fd4141";
+    writeCxt.fillRect(0,0,400,400);
+    writeCanvas.onmousedown = function(ev){
+        var ev=ev || window.event;
+        console.log(ev);
+        writeCxt.beginPath();
+        writeCxt.moveTo(ev.layerX,ev.layerY);
+        document.onmousemove = function(ev){
+            var ev = ev || window.event;
+            writeCxt.lineTo(ev.layerX,ev.layerY);
+            writeCxt.stroke();
+        };
+        document.onmouseup = function(){
+            document.onmousemove = null;
+            document.onmouseup = null;
+        };
+
+    }
+</script>
+</body>
+</html>
