@@ -12,6 +12,7 @@ import WorkCount from './dev/workCount';
 import SelectHard from './dev/selectHard';
 import Award from './dev/award';
 import ComponentTest from './dev/componentTest';
+import WuziChess from './dev/wuziChess';
 import './dev/component/import';
 
 const main = () => {
@@ -35,6 +36,7 @@ const main = () => {
 				<Route path={'/selectHard'} component={SelectHard} />
 				<Route path={'/award'} component={Award} />
 				<Route path={'/componentTest'} component={ComponentTest} />
+				<Route path={'/wuziChess'} component={WuziChess} />
 			</Route>
 		</Router>),
 	document.getElementById('root'),

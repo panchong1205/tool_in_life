@@ -15,6 +15,7 @@ export default class Header extends React.Component{
                 {/*<Menu.Item key="3"><Link to="/selectHard">选择困难症</Link></Menu.Item>*/}
                 <Menu.Item key="4"><Link to="/award">进阶治疗选择困难症</Link></Menu.Item>
                 <Menu.Item key="5"><Link to="/componentTest">组件测试</Link></Menu.Item>
+                <Menu.Item key="6"><Link to="/wuziChess">五子棋</Link></Menu.Item>
             </Menu>
         );
     }

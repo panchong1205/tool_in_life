@@ -1,37 +1,18 @@
 /**created by panchong on 2018/1/16**/
 import React from 'react';
-import QRCode from 'qrcode.react';
 import Header from './header';
 import Promise from 'es6-promise';
-import './componentTest.less';
 
 const black = '#000';
 const white = '#fff';
-const red = '#fd4141';
-const colors = [black, white, red];
-export default class ComponentTest extends React.Component{
+const colors = [black, white];
+export default class WuziChess extends React.Component{
     state = {
         startX: null,
         startY: null,
         coordinateArray: [],
-        current: Math.round(Math.random() * (colors.length - 1)),
+        current: Math.round(Math.random()),
     };
-    handleDownload = () => {
-        const canvas = document.getElementsByTagName('canvas')[0];
-        const aLink = document.getElementById('code1');
-        const MIME_TYPE = "image/png";
-        aLink.download = '23.png';
-        aLink.href = canvas.toDataURL("image/png");
-        aLink.dataset.downloadurl = [MIME_TYPE, aLink.href].join(':');
-    };
-    componentDidMount() {
-        const canvas = document.getElementsByTagName('canvas')[0];
-        const ctx = canvas.getContext('2d');
-        const img = document.getElementById('logo');
-        setTimeout(() => {
-            ctx.drawImage(img, 0, 0, 32, 32, 48, 48, 20,20);
-        }, 200)
-    }
     rectMouseDown = e => {
         e.preventDefault();
         const coordinate = new GetCoordinate('rectBody', e);
@@ -42,17 +23,15 @@ export default class ComponentTest extends React.Component{
         const coordinateArray = new Set(this.state.coordinateArray);
         coordinate.getNeedXY().then(data => {
             if (typeof data !== 'undefined') {
-                if (coordinateArray.has(JSON.stringify(Object.assign({}, data, { color: this.state.current })))) {
-                    coordinateArray.delete(JSON.stringify(Object.assign({}, data, { color: this.state.current })));
-                    this.setState({
-                        coordinateArray: [...coordinateArray],
-                    });
+                if (coordinateArray.has(JSON.stringify(Object.assign({}, data, { color: 0 })))
+                    || coordinateArray.has(JSON.stringify(Object.assign({}, data, { color: 1 })))) {
                     return;
                 }
                 coordinateArray.add(JSON.stringify(Object.assign({}, data, { color: this.state.current })));
                 const result = [...coordinateArray];
                 this.setState({
                     coordinateArray: result,
+                    current: JSON.parse(result[coordinateArray.size - 1]).color === 0 ? 1 : 0,
                 });
             }
         });
@@ -67,6 +46,7 @@ export default class ComponentTest extends React.Component{
                     const result = [...coordinateArray];
                     this.setState({
                         coordinateArray: result,
+                        current: JSON.parse(result[coordinateArray.size - 1]).color === 0 ? 1 : 0,
                     });
                 }
             });
@@ -81,16 +61,18 @@ export default class ComponentTest extends React.Component{
     render() {
         const array = new Array(25).fill('');
         return <div className="componentTest">
-            <Header keys={['5']} />
-            <p>二维码中间插入logo，前端下载图片</p>
-            <QRCode
-                value="aaaaaaaaa"
-            />
-            <a id="code1" onClick={this.handleDownload}>
-                下载二维码
-            </a>
-            <img style={{ display: 'none' }} src="images/favicon.png" alt="" id="logo" width={100}/>
+            <Header keys={['6']} />
             <div className="flex_row_start">
+                <div>
+                    当前出棋
+                    <div style={{
+                        width: 20,
+                        height: 20,
+                        borderRadius: 10,
+                        backgroundColor: colors[this.state.current],
+                    }}>
+                    </div>
+                </div>
                 <div className="rect"
                      id="rectBody"
                      onMouseDown={this.rectMouseDown}
@@ -148,33 +130,6 @@ class GetCoordinate{
         }
     }
     getNeedXY() {
-        // // 四舍五入打出5的整数倍
-        // return new Promise((resolve, rejected) => {
-        //     Promise.all([new Promise((resolve, rejected) => {
-        //         if (this.x % 10 >= 5) {
-        //             resolve((Number.parseInt(this.x / 10) + 1) * 10);
-        //             return;
-        //         }
-        //         if (this.x % 10 === 0) {
-        //             resolve(this.x);
-        //         }
-        //         resolve((Number.parseInt(this.x / 10) * 10) + 5);
-        //     }), new Promise((resolve, rejected) => {
-        //         if (this.y % 10 >= 5) {
-        //             resolve((Number.parseInt(this.y / 10) + 1) * 10);
-        //             return;
-        //         }
-        //         if (this.y % 10 === 0) {
-        //             resolve(this.y);
-        //         }
-        //         resolve((Number.parseInt(this.y / 10) * 10) + 5);
-        //     })]).then(data => {
-        //         resolve({
-        //             x: data[0],
-        //             y: data[1],
-        //         });
-        //     });
-        // });
         // 坐标点为20的整数倍，误差为5
         const error = 10;
         const basic = 40
