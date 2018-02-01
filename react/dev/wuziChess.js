@@ -18,6 +18,13 @@ export default class WuziChess extends React.Component{
     };
     rectMouseDown = e => {
         e.preventDefault();
+        if (this.state.up2down.length >= 5
+        || this.state.left2right.length >= 5
+        || this.state.leftup2rightdown.length >= 5
+        || this.state.rightup2leftdown.length >= 5) {
+            message.success('重新开棋');
+            return;
+        }
         const coordinate = new GetCoordinate('rectBody', e);
         const coordinateArray = new Set(this.state.coordinateArray);
         coordinate.getNeedXY().then(data => {
@@ -303,14 +310,26 @@ export default class WuziChess extends React.Component{
             <Header keys={['6']} />
             <div className="flex_column_start">
                 <div className="flex_row_start">
+                    棋子分配：左<div style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 10,
+                    backgroundColor: colors[0],
+                }}/>右<div style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 10,
+                    backgroundColor: colors[1],
+                }}/>
+                </div>
+                <div className="flex_row_start">
                     当前出棋
                     <div style={{
                         width: 20,
                         height: 20,
                         borderRadius: 10,
                         backgroundColor: colors[this.state.current],
-                    }}>
-                    </div>
+                    }}/>
                     <button onClick={this.clear}>清空</button>
                 </div>
                 <div className="rect"
