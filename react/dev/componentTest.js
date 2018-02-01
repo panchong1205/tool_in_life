@@ -175,9 +175,8 @@ class GetCoordinate{
         //         });
         //     });
         // });
-        // 坐标点为20的整数倍，误差为5
-        const error = 10;
-        const basic = 40
+        const error = 15;
+        const basic = 40;
         return new Promise((resolve, rejected) => {
             Promise.all([new Promise((resolve, rejected) => {
                 if (this.x % basic >= basic - error) {
