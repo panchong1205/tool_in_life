@@ -15,6 +15,7 @@ export default class WuziChess extends React.Component{
         left2right: [],
         leftup2rightdown: [],
         rightup2leftdown: [],
+        hasLined: [],
     };
     rectMouseDown = e => {
         e.preventDefault();
@@ -44,10 +45,10 @@ export default class WuziChess extends React.Component{
                     leftup2rightdown: [JSON.stringify(resultData)],
                     rightup2leftdown: [JSON.stringify(resultData)],
                 });
-                this.judgeUp2Down(resultData, result);
-                this.judgeLeft2Right(resultData, result);
-                this.judgeLeftUp2RightDown(resultData, result);
-                this.judgeRightUp2LeftDown(resultData, result);
+                this.judge(resultData, result, 'up2down', [JSON.stringify(resultData)]);
+                this.judge(resultData, result, 'left2right', [JSON.stringify(resultData)]);
+                this.judge(resultData, result, 'leftup2rightdown', [JSON.stringify(resultData)]);
+                this.judge(resultData, result, 'rightup2leftdown', [JSON.stringify(resultData)]);
             }
         });
     };
@@ -59,18 +60,31 @@ export default class WuziChess extends React.Component{
             left2right: [],
             leftup2rightdown: [],
             rightup2leftdown: [],
+            hasLined: [],
         })
     };
-    judgeUp2Down = (data, array) => {
+    judge = (data, array, direction, directionArray) => {
+        let up = {
+            x: data.x,
+            y: data.y,
+            color: data.color,
+        };
+        let down = {
+            x: data.x,
+            y: data.y,
+            color: data.color,
+        };
         const basic = new GetCoordinate().getBasic();
-        const line = new Set(this.state.up2down);
+        const line = new Set(directionArray);
         const pointArray = new Set(array);
+        switch (direction) {
+            default: break;
+            case 'up2down': up = Object.assign({}, up, { y: data.y - basic }); down = Object.assign({}, down, { y: data.y + basic });break;
+            case 'left2right': up = Object.assign({}, up, { x: data.x - basic }); down = Object.assign({}, down, { x: data.x + basic });break;
+            case 'leftup2rightdown': up = Object.assign({}, up, { x: data.x - basic, y: data.y - basic }); down = Object.assign({}, down, { x: data.x + basic, y: data.y + basic });break;
+            case 'rightup2leftdown': up = Object.assign({}, up, { x: data.x + basic, y: data.y - basic }); down = Object.assign({}, down, { x: data.x - basic, y: data.y + basic });break;
+        }
         Promise.all([new Promise((resolve, rejected) => {
-            const up = {
-                x: data.x,
-                y: data.y - basic,
-                color: data.color,
-            };
             if (pointArray.has(JSON.stringify(up))) {
                 resolve({
                     state: true,
@@ -83,11 +97,6 @@ export default class WuziChess extends React.Component{
                 point: up,
             });
         }), new Promise((resolve, rejected) => {
-            const down = {
-                x: data.x,
-                y: data.y + basic,
-                color: data.color,
-            };
             if (pointArray.has(JSON.stringify(down))) {
                 resolve({
                     state: true,
@@ -109,196 +118,16 @@ export default class WuziChess extends React.Component{
                     if (!line.has(JSON.stringify(item.point))) {
                         line.add(JSON.stringify(item.point));
                         this.setState({
-                            up2down: [...line],
+                            [direction]: [...line],
                         });
                         if (line.size === 5) {
-                            message.success('上下5子连线了');
+                            message.success('5子连线了');
+                            this.setState({
+                                hasLined: [...line],
+                            });
                             return;
                         }
-                        this.judgeUp2Down(item.point, array);
-                    }
-                });
-            }
-        });
-    };
-    judgeLeft2Right = (data, array) => {
-        const basic = new GetCoordinate().getBasic();
-        const line = new Set(this.state.left2right);
-        const pointArray = new Set(array);
-        Promise.all([new Promise((resolve, rejected) => {
-            const up = {
-                x: data.x - basic,
-                y: data.y,
-                color: data.color,
-            };
-            if (pointArray.has(JSON.stringify(up))) {
-                resolve({
-                    state: true,
-                    point: up,
-                });
-                return;
-            }
-            resolve({
-                state: false,
-                point: up,
-            });
-        }), new Promise((resolve, rejected) => {
-            const down = {
-                x: data.x + basic,
-                y: data.y,
-                color: data.color,
-            };
-            if (pointArray.has(JSON.stringify(down))) {
-                resolve({
-                    state: true,
-                    point: down,
-                });
-                return;
-            }
-            resolve({
-                state: false,
-                point: down,
-            });
-        })]).then(data => {
-            if (line.size < 5) {
-                const trueData = data.filter(item => item.state);
-                if (trueData.length === 0) {
-                    return;
-                }
-                trueData.map(item => {
-                    if (!line.has(JSON.stringify(item.point))) {
-                        line.add(JSON.stringify(item.point));
-                        this.setState({
-                            left2right: [...line],
-                        });
-                        console.log([...line]);
-                        if (line.size === 5) {
-                            message.success('左右5子连线了');
-                            return;
-                        }
-                        this.judgeLeft2Right(item.point, array);
-                    }
-                });
-            }
-        });
-    };
-    judgeLeftUp2RightDown = (data, array) => {
-        const basic = new GetCoordinate().getBasic();
-        const line = new Set(this.state.leftup2rightdown);
-        const pointArray = new Set(array);
-        Promise.all([new Promise((resolve, rejected) => {
-            const up = {
-                x: data.x - basic,
-                y: data.y - basic,
-                color: data.color,
-            };
-            if (pointArray.has(JSON.stringify(up))) {
-                resolve({
-                    state: true,
-                    point: up,
-                });
-                return;
-            }
-            resolve({
-                state: false,
-                point: up,
-            });
-        }), new Promise((resolve, rejected) => {
-            const down = {
-                x: data.x + basic,
-                y: data.y + basic,
-                color: data.color,
-            };
-            if (pointArray.has(JSON.stringify(down))) {
-                resolve({
-                    state: true,
-                    point: down,
-                });
-                return;
-            }
-            resolve({
-                state: false,
-                point: down,
-            });
-        })]).then(data => {
-            if (line.size < 5) {
-                const trueData = data.filter(item => item.state);
-                if (trueData.length === 0) {
-                    return;
-                }
-                trueData.map(item => {
-                    if (!line.has(JSON.stringify(item.point))) {
-                        line.add(JSON.stringify(item.point));
-                        this.setState({
-                            leftup2rightdown: [...line],
-                        });
-                        console.log([...line]);
-                        if (line.size === 5) {
-                            message.success('左上右下5子连线了');
-                            return;
-                        }
-                        this.judgeLeftUp2RightDown(item.point, array);
-                    }
-                });
-            }
-        });
-    };
-    judgeRightUp2LeftDown = (data, array) => {
-        const basic = new GetCoordinate().getBasic();
-        const line = new Set(this.state.rightup2leftdown);
-        const pointArray = new Set(array);
-        Promise.all([new Promise((resolve, rejected) => {
-            const up = {
-                x: data.x + basic,
-                y: data.y - basic,
-                color: data.color,
-            };
-            if (pointArray.has(JSON.stringify(up))) {
-                resolve({
-                    state: true,
-                    point: up,
-                });
-                return;
-            }
-            resolve({
-                state: false,
-                point: up,
-            });
-        }), new Promise((resolve, rejected) => {
-            const down = {
-                x: data.x - basic,
-                y: data.y + basic,
-                color: data.color,
-            };
-            if (pointArray.has(JSON.stringify(down))) {
-                resolve({
-                    state: true,
-                    point: down,
-                });
-                return;
-            }
-            resolve({
-                state: false,
-                point: down,
-            });
-        })]).then(data => {
-            if (line.size < 5) {
-                const trueData = data.filter(item => item.state);
-                if (trueData.length === 0) {
-                    return;
-                }
-                trueData.map(item => {
-                    if (!line.has(JSON.stringify(item.point))) {
-                        line.add(JSON.stringify(item.point));
-                        this.setState({
-                            rightup2leftdown: [...line],
-                        });
-                        console.log([...line]);
-                        if (line.size === 5) {
-                            message.success('右上左下5子连线了');
-                            return;
-                        }
-                        this.judgeRightUp2LeftDown(item.point, array);
+                        this.judge(item.point, array, direction, [...line]);
                     }
                 });
             }
@@ -346,6 +175,18 @@ export default class WuziChess extends React.Component{
                             borderRadius: 10,
                             backgroundColor: colors[JSON.parse(item).color],
                             zIndex: 2,
+                        }}/>)
+                    }
+                    {
+                        this.state.hasLined.map(item => <div key={item} style={{
+                            position: 'absolute',
+                            left: JSON.parse(item).x - 5,
+                            top: JSON.parse(item).y - 5,
+                            width: 10,
+                            height: 10,
+                            borderRadius: 5,
+                            backgroundColor: '#fd4141',
+                            zIndex: 3,
                         }}/>)
                     }
                     <table cellPadding={0} cellSpacing={0}>
