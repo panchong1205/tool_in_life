@@ -36,6 +36,11 @@ module.exports = {
         new webpack.DefinePlugin({
             DEV_STATE: JSON.stringify(JSON.parse(process.env.DEV || 'false'))
         }),
+        new webpack.optimize.UglifyJsPlugin({ // js代码压缩
+            compress: {
+                warnings: false,
+            },
+        }),
         new ExtractTextPlugin('css/[id].[hash].css'),
         new HtmlWebpackPlugin({
             chunks: ['front'],
