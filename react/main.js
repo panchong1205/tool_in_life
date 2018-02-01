@@ -16,13 +16,12 @@ import WuziChess from './dev/wuziChess';
 import './dev/component/import';
 
 const main = () => {
-	if (moment().format('X') >= moment('2018-01-02').format('X') && moment().format('X') <= moment('2018-01-31').format('X')) {
+	if (moment().format('X') >= moment('2018-02-01').format('X') && moment().format('X') <= moment('2018-02-28').format('X')) {
         Modal.info({
-            title: '外卖计算器修复了新的bug',
+            title: '新功能上线',
             content: (
 				<div>
-					<p>1。费用为0的项目可不填</p>
-					<p>2。输错或漏填时可直接修改再次计算不必再刷新页面重填</p>
+					五子棋功能上线了！两个人在一台电脑上玩五子棋
 				</div>
             ),
             onOk() {},
