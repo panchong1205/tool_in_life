@@ -44,6 +44,16 @@ export default class WuziChess extends React.Component{
             }
         });
     };
+    clear = () => {
+        this.setState({
+            coordinateArray: [],
+            current: Math.round(Math.random()),
+            up2down: [],
+            left2right: [],
+            leftup2rightdown: [],
+            rightup2leftdown: [],
+        })
+    };
     judgeUp2Down = (data, array) => {
         const basic = new GetCoordinate().getBasic();
         const line = new Set(this.state.up2down);
@@ -291,8 +301,8 @@ export default class WuziChess extends React.Component{
         const array = new Array(25).fill('');
         return <div className="componentTest">
             <Header keys={['6']} />
-            <div className="flex_row_start">
-                <div>
+            <div className="flex_column_start">
+                <div className="flex_row_start">
                     当前出棋
                     <div style={{
                         width: 20,
@@ -301,6 +311,7 @@ export default class WuziChess extends React.Component{
                         backgroundColor: colors[this.state.current],
                     }}>
                     </div>
+                    <button onClick={this.clear}>清空</button>
                 </div>
                 <div className="rect"
                      id="rectBody"
