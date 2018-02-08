@@ -21,7 +21,10 @@ export default class Fetch {
             method: 'GET',
         };
         const newConfig = Object.assign({}, defaultConfig, config);
-        fetch(url, newConfig).then(response => response.json()).then(data => {
+        fetch(url, newConfig).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
             if (data.success) {
                 success(data);
             } else {
@@ -37,8 +40,9 @@ export default class Fetch {
 
     static get(url, config = {}) {
         let urls = url;
-        const params = { access_token: sessionStorage.token };
-        urls = `${url}?${handelForm(Object.assign({}, config, params))}`;
+        if (config !== {}) {
+            urls = `${url}?${handelForm(config)}`;
+        }
         return new Promise((resolve, reject) => {
             const newConfig = {
                 method: 'GET',
@@ -46,6 +50,7 @@ export default class Fetch {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 credentials: 'include',
+                mode: "no-cors",
             };
             Fetch.remote(urls, newConfig, resolve, reject);
         });
@@ -60,8 +65,9 @@ export default class Fetch {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 credentials: 'include',
+                mode: "no-cors",
             };
-            const params = { access_token: sessionStorage.token };
+            const params = {  };
             const body = { body: typeof config === 'object' ? handelForm(Object.assign({}, config, params)) : config };
             defaultConfig = Object.assign({}, defaultConfig, body);
             Fetch.remote(url, defaultConfig, resolve, reject);
@@ -70,7 +76,7 @@ export default class Fetch {
 
     static del(url, config) {
         let urls = url;
-        const params = { access_token: sessionStorage.token };
+        const params = {  };
         if (config) {
             urls = `${url}?${handelForm(Object.assign({}, config, params))}`;
         }
@@ -81,6 +87,7 @@ export default class Fetch {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 credentials: 'include',
+                mode: "no-cors",
             };
             Fetch.remote(urls, defaultConfig, resolve, reject);
         });
@@ -88,7 +95,7 @@ export default class Fetch {
 
     static put(url, data) {
         let urls = url;
-        const params = { access_token: sessionStorage.token };
+        const params = {  };
         if (data) {
             urls = `${url}?${handelForm(Object.assign({}, data, params))}`;
         }
@@ -99,17 +106,19 @@ export default class Fetch {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 credentials: 'include',
+                mode: "no-cors",
             };
             Fetch.remote(urls, newConfig, resolve, reject);
         });
     }
     static postJSON(url, data) {
         return new Promise((resolve, reject) => {
-            const params = { access_token: sessionStorage.token };
+            const params = {  };
             const newConfig = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
+                mode: "no-cors",
                 body: JSON.stringify(Object.assign({}, data, params)),
             };
             Fetch.remote(url, newConfig, resolve, reject);

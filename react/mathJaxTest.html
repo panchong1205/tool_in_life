@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+    <!--<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+</head>
+<body>
+When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+<p id="recognition">
+
+</p>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script>
+    $.ajax({
+        url: "http://127.0.0.1:3000/test1",
+        success: function (data) {
+            console.log(data);
+        }
+    });
+    var result = "{\\frac {1}{2}} \\div  1 = \\frac {1}{2}";
+    result = result.replace(new RegExp(/\\end\{displaymath\} \n \\end\{document\}/g), "");
+    MathJax.Hub.Queue(function(){
+        document.getElementById("recognition").innerText = "\\[{"+result+"}\\]";
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, "recognition"]);
+    });
+</script>
+</body>
+</html>

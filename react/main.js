@@ -13,10 +13,11 @@ import SelectHard from './dev/selectHard';
 import Award from './dev/award';
 import ComponentTest from './dev/componentTest';
 import WuziChess from './dev/wuziChess';
+import Recognition from './dev/recognition';
 import './dev/component/import';
 
 const main = () => {
-	if (moment().format('X') >= moment('2018-02-01').format('X') && moment().format('X') <= moment('2018-02-28').format('X')) {
+	if (moment().format('X') >= moment('2018-02-01').format('X') && moment().format('X') <= moment('2018-02-06').format('X')) {
         Modal.info({
             title: '新功能上线',
             content: (
@@ -36,6 +37,7 @@ const main = () => {
 				<Route path={'/award'} component={Award} />
 				<Route path={'/componentTest'} component={ComponentTest} />
 				<Route path={'/wuziChess'} component={WuziChess} />
+				<Route path={'/recognition'} component={Recognition} />
 			</Route>
 		</Router>),
 	document.getElementById('root'),

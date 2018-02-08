@@ -1,8 +1,10 @@
 /**created by panchong on 2018/1/16**/
 import React from 'react';
 import QRCode from 'qrcode.react';
+import $ from 'jquery';
 import Header from './header';
 import Promise from 'es6-promise';
+import API_URL from './component/url';
 import './componentTest.less';
 
 const black = '#000';
@@ -25,6 +27,15 @@ export default class ComponentTest extends React.Component{
         aLink.dataset.downloadurl = [MIME_TYPE, aLink.href].join(':');
     };
     componentDidMount() {
+        // $.ajax({
+        //     url: 'http://developer.hanvon.com/formula/handrecg.do?uuid=f8232c28-6648-45a7-f7ae-56ee8f17fbd0&traceStr=104%2C53%2C94%2C50%2C86%2C50%2C77%2C50%2C71%2C53%2C65%2C63%2C61%2C76%2C61%2C91%2C64%2C109%2C72%2C119%2C78%2C123%2C86%2C125%2C94%2C125%2C101%2C118%2C106%2C107%2C108%2C97%2C108%2C92%2C108%2C86%2C108%2C81%2C106%2C75%2C105%2C66%2C103%2C60%2C103%2C58%2C103%2C56%2C102%2C56%2C105%2C64%2C109%2C75%2C114%2C84%2C118%2C90%2C126%2C97%2C140%2C106%2C151%2C112%2C158%2C115%2C160%2C115%2C160%2C115%2C-1%2C0%2C185%2C78%2C196%2C78%2C212%2C78%2C228%2C78%2C238%2C77%2C243%2C77%2C248%2C76%2C256%2C74%2C258%2C74%2C-1%2C0%2C215%2C55%2C-1%2C0%2C219%2C108%2C-1%2C0%2C311%2C27%2C311%2C31%2C311%2C35%2C311%2C39%2C311%2C48%2C312%2C67%2C314%2C81%2C316%2C91%2C316%2C96%2C316%2C100%2C316%2C108%2C316%2C113%2C316%2C113%2C316%2C104%2C316%2C86%2C317%2C73%2C317%2C66%2C317%2C64%2C319%2C62%2C326%2C59%2C336%2C57%2C344%2C57%2C349%2C57%2C352%2C59%2C354%2C68%2C356%2C81%2C356%2C87%2C354%2C94%2C350%2C99%2C345%2C104%2C339%2C107%2C332%2C110%2C328%2C112%2C326%2C112%2C325%2C113%2C323%2C113%2C323%2C113%2C-1%2C0%2C421%2C66%2C426%2C66%2C433%2C66%2C441%2C66%2C444%2C66%2C445%2C66%2C-1%2C0%2C422%2C94%2C426%2C94%2C434%2C94%2C440%2C95%2C442%2C95%2C445%2C95%2C446%2C95%2C448%2C95%2C450%2C95%2C451%2C95%2C-1%2C0%2C546%2C62%2C541%2C62%2C529%2C62%2C520%2C65%2C512%2C72%2C504%2C81%2C499%2C90%2C497%2C103%2C501%2C123%2C517%2C140%2C539%2C147%2C569%2C150%2C587%2C147%2C600%2C141%2C604%2C137%2C605%2C137%2C-1%2C0%2C',
+        //     success: data => {
+        //         console.log(data);
+        //         this.setState({
+        //             hanwang: daa.formulas[0],
+        //         })
+        //     },
+        // });
         const canvas = document.getElementsByTagName('canvas')[0];
         const ctx = canvas.getContext('2d');
         const img = document.getElementById('logo');
@@ -32,6 +43,7 @@ export default class ComponentTest extends React.Component{
             ctx.drawImage(img, 0, 0, 32, 32, 48, 48, 20,20);
         }, 200)
     }
+
     rectMouseDown = e => {
         e.preventDefault();
         const coordinate = new GetCoordinate('rectBody', e);
@@ -91,6 +103,7 @@ export default class ComponentTest extends React.Component{
             </a>
             <img style={{ display: 'none' }} src="images/favicon.png" alt="" id="logo" width={100}/>
             <div className="flex_row_start">
+                记录坐标：
                 <div className="rect"
                      id="rectBody"
                      onMouseDown={this.rectMouseDown}

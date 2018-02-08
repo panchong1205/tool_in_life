@@ -4,7 +4,11 @@
   "description": "Hello Koa 2 example with async",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "./node_modules/.bin/nodemon bin/run",
+    "koa": "./node_modules/.bin/runkoa bin/www",
+    "pm2": "pm2 start bin/run ",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start_koa": "bin/run"
   },
   "keywords": [
     "koa",
@@ -17,6 +21,11 @@
     "url": "https://github.com/michaelliao/learn-javascript.git"
   },
   "dependencies": {
-    "koa": "2.0.0"
+    "koa": "2.0.0",
+    "koa-cors": "0.0.16",
+    "koa-router": "7.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.12"
   }
 }
