@@ -18,12 +18,6 @@ When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
     MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
 </script>
 <script>
-    $.ajax({
-        url: "http://127.0.0.1:3000/test1",
-        success: function (data) {
-            console.log(data);
-        }
-    });
     var result = "{\\frac {1}{2}} \\div  1 = \\frac {1}{2}";
     result = result.replace(new RegExp(/\\end\{displaymath\} \n \\end\{document\}/g), "");
     MathJax.Hub.Queue(function(){
