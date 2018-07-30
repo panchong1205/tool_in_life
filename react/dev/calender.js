@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Icon, message } from 'antd';
 import moment from 'moment';
+import Header from './header';
 import './calender.less';
 
 export default class Calender extends Component {
@@ -53,56 +54,59 @@ export default class Calender extends Component {
         const YYYYMM = 'YYYY-MM';
         const weekName = ['一', '二', '三', '四', '五', '六', '日'];
         return (
-            <div className="calender">
-                <div className="flex_row_center flex_vertical_middle headMonth">
-                    <button
-                        onClick={() => {
-                            const current = moment(this.state.date);
-                            const clickMonth = Number(current.format('MM')) > 1 ? Number(current.format('MM')) - 1 : 12;
-                            const clickYear = Number(current.format('MM')) > 1 ? Number(current.format('YYYY')) : Number(current.format('YYYY')) - 1;
-                            this.changeDate('date', `${clickYear}-${clickMonth}-1`);
-                        }}
-                    >
-                        <Icon type="caret-left"/>
-                    </button>
-                    {moment(this.state.date).format('YYYY年MM月')}
-                    <button
-                        onClick={() => {
-                            const current = moment(this.state.date);
-                            const clickMonth = Number(current.format('MM')) < 12 ? Number(current.format('MM')) + 1 : 1;
-                            const clickYear = Number(current.format('MM')) < 12 ? Number(current.format('YYYY')) : Number(current.format('YYYY')) + 1;
-                            this.changeDate('date', `${clickYear}-${clickMonth}-1`);
-                        }}
-                    >
-                        <Icon type="caret-right"/>
-                    </button>
-                </div>
-                <div className="flex_row_start">
-                    {
-                        weekName.map((item, index) => <div
-                            key={`week${index}`}
-                            className="dateItem flex_column_center flex_vertical_middle"
-                            style={{
-                                borderTop: 'none',
+            <div className="flex_row_start flex_vertical_top">
+                <Header keys={['8']} />
+                <div className="calender">
+                    <div className="flex_row_center flex_vertical_middle headMonth">
+                        <button
+                            onClick={() => {
+                                const current = moment(this.state.date);
+                                const clickMonth = Number(current.format('MM')) > 1 ? Number(current.format('MM')) - 1 : 12;
+                                const clickYear = Number(current.format('MM')) > 1 ? Number(current.format('YYYY')) : Number(current.format('YYYY')) - 1;
+                                this.changeDate('date', `${clickYear}-${clickMonth}-1`);
                             }}
                         >
-                            {item}
-                        </div>)
-                    }
-                    {
-                        this.state.dateList.map((item, index) => <div
-                            key={`week${index}`}
-                            style={
-                                item.month !== Number(moment(this.state.date).format('MM')) ||
-                                item.year !== Number(moment(this.state.date).format('YYYY')) ? {
-                                    color: '#ccc',
-                                } : {}
-                            }
-                            className={`dateItem flex_column_center flex_vertical_middle ${item.timestamp === Number(moment(this.state.date).format('x')) ? 'selected' : ''}`}
+                            <Icon type="caret-left"/>
+                        </button>
+                        {moment(this.state.date).format('YYYY年MM月')}
+                        <button
+                            onClick={() => {
+                                const current = moment(this.state.date);
+                                const clickMonth = Number(current.format('MM')) < 12 ? Number(current.format('MM')) + 1 : 1;
+                                const clickYear = Number(current.format('MM')) < 12 ? Number(current.format('YYYY')) : Number(current.format('YYYY')) + 1;
+                                this.changeDate('date', `${clickYear}-${clickMonth}-1`);
+                            }}
                         >
-                            {item.day}
-                        </div>)
-                    }
+                            <Icon type="caret-right"/>
+                        </button>
+                    </div>
+                    <div className="flex_row_start">
+                        {
+                            weekName.map((item, index) => <div
+                                key={`week${index}`}
+                                className="dateItem flex_column_center flex_vertical_middle"
+                                style={{
+                                    borderTop: 'none',
+                                }}
+                            >
+                                {item}
+                            </div>)
+                        }
+                        {
+                            this.state.dateList.map((item, index) => <div
+                                key={`week${index}`}
+                                style={
+                                    item.month !== Number(moment(this.state.date).format('MM')) ||
+                                    item.year !== Number(moment(this.state.date).format('YYYY')) ? {
+                                        color: '#ccc',
+                                    } : {}
+                                }
+                                className={`dateItem flex_column_center flex_vertical_middle ${item.timestamp === Number(moment(this.state.date).format('x')) ? 'selected' : ''}`}
+                            >
+                                {item.day}
+                            </div>)
+                        }
+                    </div>
                 </div>
             </div>
         );
