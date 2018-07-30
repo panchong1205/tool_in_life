@@ -2,8 +2,10 @@
  * Created by panchong on 17/1/21.
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Route, Router, IndexRoute, hashHistory } from 'react-router';
+// import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+// import { Route, Router, IndexRoute, hashHistory } from 'react-router';
 import { Modal } from 'antd';
 import moment from 'moment';
 import App from './dev/app';
@@ -28,18 +30,18 @@ const main = () => {
             onOk() {},
         });
 	}
-	ReactDOM.render(
-	    (<Router history={hashHistory}>
-			<Route path="/" component={App}>
-				<IndexRoute component={WaiMai} />
+	render(
+	    (<HashRouter>
+			<Switch>
+				<Route path="/" exact={true} component={WaiMai}/>
 				<Route path={'/workCount'} component={WorkCount} />
 				<Route path={'/selectHard'} component={SelectHard} />
 				<Route path={'/award'} component={Award} />
 				<Route path={'/componentTest'} component={ComponentTest} />
 				<Route path={'/wuziChess'} component={WuziChess} />
 				<Route path={'/recognition'} component={Recognition} />
-			</Route>
-		</Router>),
+			</Switch>
+		</HashRouter>),
 	document.getElementById('root'),
  )
 };

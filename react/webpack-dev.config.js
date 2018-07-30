@@ -1,46 +1,15 @@
-/**
- * Created by panchong on 16/12/28.
- */
+/** created by panchong on 2018/2/11* */
 const path = require('path');
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const merge = require('webpack-merge');
+const baseWebpackConfig = require('./webpack-base.config');
 
-module.exports = {
-    entry: {
-        front: './main.js',
+module.exports = merge(baseWebpackConfig, {
+    devtool: '#source-map', // cheap-source-map 生产环境不打map
+    devServer: {
+        contentBase: path.resolve(__dirname, 'dist'), // 基本目录结构（服务器根目录）
+        host: 'localhost', // 服务器地址（可以使用IP也可以使用localhost，用ipconfig命令查看自己的IP）
+        port: 8000, // 端口
+        // compress: true, // 是否启用服务器压缩
+        // openPage: '#/A',
     },
-    output: { path: `${__dirname}/dist`, filename: 'js/[name].[hash].js', publicPath: '/' },
-    module: {
-        rules: [{
-            test: /\.js?$/,
-            exclude: /node_modules/,
-            use: [{ loader: 'babel-loader' }],
-        }, {
-            test: /\.less$/,
-            use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader', 'less-loader'] }),
-        }, {
-            test: /\.css$/,
-            use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }),
-        }, {
-            test: /\.(jpg|png|gif)$/,
-            use: ['file-loader?name=images/[name].[hash].[ext]'],
-        }, {
-            test: /\.(eot|woff|woff2|ttf|svg)$/,
-            use: ['file-loader?name=fonts/[name].[ext]'],
-        }],
-
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            DEV_STATE: JSON.stringify(JSON.parse(process.env.DEV || 'false'))
-        }),
-        new ExtractTextPlugin('css/[id].[hash].css'),
-        new HtmlWebpackPlugin({
-            chunks: ['front'],
-            filename: 'index.html',
-            template: path.join(__dirname, '/index-tmpl.html'),
-        }),
-    ],
-    devtool: '#source-map',
-};
+});
