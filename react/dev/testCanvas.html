@@ -24,11 +24,12 @@
     writeCxt.fillRect(0,0,400,400);
     writeCanvas.onmousedown = function(ev){
         var ev=ev || window.event;
-        console.log(ev);
+        console.log(ev.layerX, ev.layerY);
         writeCxt.beginPath();
         writeCxt.moveTo(ev.layerX,ev.layerY);
         document.onmousemove = function(ev){
             var ev = ev || window.event;
+            console.log(ev.layerX, ev.layerY);
             writeCxt.lineTo(ev.layerX,ev.layerY);
             writeCxt.stroke();
         };

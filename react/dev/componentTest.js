@@ -44,14 +44,29 @@ export default class ComponentTest extends React.Component{
         }, 200)
     }
 
-    rectMouseDown = e => {
+      rectMouseDown = e => {
         e.preventDefault();
         const coordinate = new GetCoordinate('rectBody', e);
         this.setState({
             startX: coordinate.getX(),
             startY: coordinate.getY(),
         });
-        const coordinateArray = new Set(this.state.coordinateArray);
+          // TODO TEST
+          const rect = document.getElementById('rectBody');
+          let parentX = rect.offsetLeft,//元素距离页面左边
+              parentY = rect.offsetTop,//元素距离页面顶部
+              selfX = e.pageX,//鼠标点距离页面左边
+              selfY = e.pageY,//鼠标点距离页面顶部
+              x = e.pageX - rect.offsetLeft,
+              y = e.pageY - rect.offsetTop;
+
+          console.log(rect);
+          console.log(parentX,parentY,selfX,selfY,x,y);
+
+
+          // TODO TEST
+
+          const coordinateArray = new Set(this.state.coordinateArray);
         coordinate.getNeedXY().then(data => {
             if (typeof data !== 'undefined') {
                 if (coordinateArray.has(JSON.stringify(Object.assign({}, data, { color: this.state.current })))) {
@@ -102,39 +117,45 @@ export default class ComponentTest extends React.Component{
                 下载二维码
             </a>
             <img style={{ display: 'none' }} src="images/favicon.png" alt="" id="logo" width={100}/>
-            <div className="flex_row_start">
-                记录坐标：
-                <div className="rect"
-                     id="rectBody"
-                     onMouseDown={this.rectMouseDown}
-                     onMouseMove={this.rectMouseMove}
-                     onMouseUp={this.rectMouseUp}
-                >
-                    {
-                        this.state.coordinateArray.map(item => <div key={item} style={{
-                            position: 'absolute',
-                            left: JSON.parse(item).x - 10,
-                            top: JSON.parse(item).y - 10,
-                            width: 20,
-                            height: 20,
-                            borderRadius: 10,
-                            backgroundColor: colors[JSON.parse(item).color],
-                            zIndex: 2,
-                        }}/>)
-                    }
-                    <table cellPadding={0} cellSpacing={0}>
-                        <tbody>
+
+            <div style={{marginLeft: 200}}>
+                <div className="flex_row_start">
+                    记录坐标：
+                    <div className="rect"
+                         id="rectBody"
+                         onMouseDown={this.rectMouseDown}
+                         onMouseMove={this.rectMouseMove}
+                         onMouseUp={this.rectMouseUp}
+                    >
                         {
-                            array.map(() => <tr>
-                                {
-                                    array.map(() => <td></td>)
-                                }
-                            </tr>)
+                            this.state.coordinateArray.map(item => <div key={item} style={{
+                                position: 'absolute',
+                                left: JSON.parse(item).x - 10,
+                                top: JSON.parse(item).y - 10,
+                                width: 20,
+                                height: 20,
+                                borderRadius: 10,
+                                backgroundColor: colors[JSON.parse(item).color],
+                                zIndex: 2,
+                            }}/>)
                         }
-                        </tbody>
-                    </table>
+                        <table cellPadding={0} cellSpacing={0}>
+                            <tbody>
+                            {
+                                array.map(() => <tr>
+                                    {
+                                        array.map(() => <td></td>)
+                                    }
+                                </tr>)
+                            }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
             </div>
+
+
         </div>
     }
 }
@@ -161,35 +182,8 @@ class GetCoordinate{
         }
     }
     getNeedXY() {
-        // // 四舍五入打出5的整数倍
-        // return new Promise((resolve, rejected) => {
-        //     Promise.all([new Promise((resolve, rejected) => {
-        //         if (this.x % 10 >= 5) {
-        //             resolve((Number.parseInt(this.x / 10) + 1) * 10);
-        //             return;
-        //         }
-        //         if (this.x % 10 === 0) {
-        //             resolve(this.x);
-        //         }
-        //         resolve((Number.parseInt(this.x / 10) * 10) + 5);
-        //     }), new Promise((resolve, rejected) => {
-        //         if (this.y % 10 >= 5) {
-        //             resolve((Number.parseInt(this.y / 10) + 1) * 10);
-        //             return;
-        //         }
-        //         if (this.y % 10 === 0) {
-        //             resolve(this.y);
-        //         }
-        //         resolve((Number.parseInt(this.y / 10) * 10) + 5);
-        //     })]).then(data => {
-        //         resolve({
-        //             x: data[0],
-        //             y: data[1],
-        //         });
-        //     });
-        // });
-        const error = 15;
-        const basic = 40;
+        const error = 15;// 误差
+        const basic = 40;// 小方格尺寸
         return new Promise((resolve, rejected) => {
             Promise.all([new Promise((resolve, rejected) => {
                 if (this.x % basic >= basic - error) {

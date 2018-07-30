@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #output, #outputPai{
+            width: auto;
+            height: 30px;
+            /*background-color: #cccccc;*/
+        }
+    </style>
+</head>
+<body>
+<div class="">
+    精确到小数点后
+    <input id="floatCount" value="3" type="number" onchange="floatChange(this.value)"/>
+    位
+</div>
+<div id="output">
+
+</div>
+<script>
+    var i = 0;
+    var result = 4;
+    var range = 1;
+    var floatCount = parseInt(document.getElementById('floatCount').value);
+    function floatChange(e) {
+        floatCount = parseInt(e);
+        test();
+    }
+    function test() {
+        var x = i + '';//测试的数字
+        var y = x.indexOf(".") + 1;//获取小数点的位置
+        var count = 0;
+        if (y > 0) {
+            count = x.length - y;//获取小数点后的个数
+        }
+        if (count >= floatCount) {
+            if (Math.round(Math.exp(0.6-(0.5*i))) == result ) {
+                document.getElementById('output').innerText = i + '';
+                return;
+            }
+        } else {
+            if (Math.exp(0.6-(0.5*i)) < result) {
+                i = (parseFloat(i) - parseFloat(range)).toFixed(count);
+            } else if (Math.exp(0.6-(0.5*i)) > result) {
+                i = ((2 * i) + parseFloat(range)) / 2;
+                i = i.toFixed(count + 1);
+                if (count > 0) {
+                    var rangeArr = range.split('.');
+                    range = rangeArr[0] + '.0' + rangeArr[1];
+                } else {
+                    range = '0.' + range;
+                }
+            }
+            test();
+        }
+    }
+    test();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #output{
+            width: auto;
+            height: 30px;
+            /*background-color: #cccccc;*/
+        }
+    </style>
+</head>
+<body>
+<div id="output">
+
+</div>
+<script>
+    var arrIn = [];
+    var arrOut = [];
+    var exampleCount = 1000000;
+    var floatCount = Math.log10(exampleCount);
+    for(var j = 1; j <= exampleCount; j++) {
+        if (j == exampleCount) {
+            var pai = ((arrIn.length / exampleCount) * 4).toFixed(floatCount);
+            document.getElementById('output').innerText = 'pai = ' + pai;
+            break;
+        }
+        var pointx = parseFloat(Math.random().toFixed(floatCount));
+        var pointy = parseFloat(Math.random().toFixed(floatCount));
+        if (Math.sqrt(Math.pow(pointx, 2) + Math.pow(pointy, 2)) > 1) {
+            arrOut.push([pointx, pointy]);
+        } else {
+            arrIn.push([pointx, pointy]);
+        }
+    }
+</script>
+</body>
+</html>
