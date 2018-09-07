@@ -16,4 +16,5 @@ UA.isUcweb = (s=ua.match(/ucbrowser/))?!!s:false;//uc浏览器
 UA.isMqq = (s=ua.match(/mqqbrowser/))?!!s:false; //是否是手机qq浏览器
 UA.isWeiBo = (s=ua.match(/__weibo__/))?!!s:false; //是否微博浏览器
 window.UA=UA;
+
 console.log(UA);
