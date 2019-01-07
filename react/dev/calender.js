@@ -22,9 +22,9 @@ export default class Calender extends Component {
     };
     getDateList = date => {
         const YYYYMMDD = 'YYYY-MM-DD';
-        const thisDay = moment(date);
-        const thisYear = thisDay.format('YYYY');
-        const thisMonth = thisDay.format('MM');
+        const thisDay = moment(date); // 今天
+        const thisYear = thisDay.format('YYYY'); // 今年
+        const thisMonth = thisDay.format('MM'); // 本月
         // 当月1号的时间戳
         const thisMonthFirstTimes = Number(moment(`${thisYear}-${thisMonth}-1`).format('x'));
         // 判断当月1号是一周的第几天
