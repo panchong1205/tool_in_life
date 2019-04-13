@@ -8,7 +8,7 @@ module.exports = merge(baseWebpackConfig, {
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'), // 基本目录结构（服务器根目录）
         host: 'localhost', // 服务器地址（可以使用IP也可以使用localhost，用ipconfig命令查看自己的IP）
-        port: 8000, // 端口
+        port: 9090, // 端口
         // compress: true, // 是否启用服务器压缩
         // openPage: '#/A',
     },

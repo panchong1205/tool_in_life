@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputNumber, Input, Button, Select } from 'antd';
+import { InputNumber, Input, Button, Select, Table } from 'antd';
 import Header from './header';
 
 const Option = Select.Option;
@@ -25,8 +25,30 @@ export class WaiMaiItem extends React.Component {
             priceTotal: '', // 商品实原价总和
 			paySum: '',
 			picName: '',
+			disCount: '', // 折扣 例如 5.5
+			priceSum: '',
+			qrcode: '',
 		};
 	}
+	componentDidMount() {
+		document.getElementById('uploadCode').addEventListener('change', function () {
+			function getObjectURL(file) {
+				var url = null;
+				if (window.createObjectURL!=undefined) {
+					url = window.createObjectURL(file) ;
+				} else if (window.URL!=undefined) { // mozilla(firefox)
+					url = window.URL.createObjectURL(file) ;
+				} else if (window.webkitURL!=undefined) { // webkit or chrome
+					url = window.webkitURL.createObjectURL(file) ;
+				}
+				return url ;
+			};
+			for (let i = 0; i < this.files.length; i++) {
+				document.getElementById('collectCode' + i).src = getObjectURL(this.files[i]);
+			}
+		});
+	}
+
 	peopleItem = () => {
 		return {
 			name: '',
@@ -103,6 +125,24 @@ export class WaiMaiItem extends React.Component {
             return Number.parseFloat(num);
         }
 	};
+	handleDiscount = () => { // 计算折扣
+		let priceSum = 0;
+		let paySum = 0;
+		const content = this.state.content.map(item => {
+			const pay = (Number(item.price) * Number(this.state.disCount) / 10).toFixed(2);
+			paySum += parseFloat(pay);
+			priceSum += parseFloat(item.price);
+			return {
+				...item,
+				pay,
+			}
+		});
+		this.setState({
+			content,
+			paySum: paySum.toFixed(2),
+			priceSum: priceSum.toFixed(2),
+		})
+	};
 	render() {
 		return (<div className="page">
 			<h1>外卖计算器</h1>
@@ -110,6 +150,8 @@ export class WaiMaiItem extends React.Component {
 				<p className="fs16">输入你们的总人数：</p>
 				<InputNumber min={2} defaultValue={2} onChange={this.changeNum} value={this.state.peopleNum}/>
 			</div>
+			<br/>
+			<p className="fs18">外卖整单满减按每人商品价格比例享受优惠</p>
 			<table className="listTable fs16" cellSpacing={0}>
 				<tbody>
 				<tr>
@@ -160,15 +202,62 @@ export class WaiMaiItem extends React.Component {
 			</table>
 			<div className="flex_row_center flex_vertical_middle">
 				<Button type="primary" onClick={this.handleCharge}>计算</Button>
-				向
-				<Select value={this.state.picName} onChange={args => this.handleState('picName', args)} style={{width: 100}}>
-					<Option value="">选择收款人</Option>
-				</Select>
-				付款
 			</div>
-			{
-				!this.state.picName ? <img src={`images/waimai.gif`} width={300}/> : <img src={`images/${this.state.picName}.png`} width={300}/>
-			}
+			<br/>
+			<p className="fs18">全单折扣计算</p>
+			<table className="listTable fs16" cellSpacing={0}>
+				<tbody>
+				<tr>
+					<td>姓名</td>
+					{
+						this.state.content.map((item, index) => <td key={`name${index}`}>
+							<Input value={item.name} placeholder="输入姓名或菜名" onChange={args => this.changeContent('name', index, args)}/>
+						</td>)
+					}
+					<td>合计</td>
+				</tr>
+				<tr>
+					<td>原价</td>
+					{
+						this.state.content.map((item, index) => <td key={`price${index}`}>
+							<Input value={item.price} placeholder="" onChange={args => this.changeContent('price', index, args)}/>
+						</td>)
+					}
+					<td>
+						{this.state.priceSum}
+					</td>
+				</tr>
+				<tr>
+					<td>个人应付</td>
+					{
+						this.state.content.map((item, index) => <td key={`pay${index}`}>{item.pay}</td>)
+					}
+					<td>
+						{this.state.paySum}
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			折扣：<Input style={{ width: 120 }} value={this.state.disCount} onChange={e => this.handleState('disCount', e.target.value)}/> 输入示例:5.5 表示五五折
+			<Button type={'primary'} onClick={this.handleDiscount}>计算</Button>
+			<br/>
+			<br/>
+			<p>
+				添加你的收款码,可以同时多选文件 一起添加支付宝和微信的收款码
+			</p>
+			<input type="file" accept="image/*" id="uploadCode" multiple placeholder="添加你的收款码图片"/>
+			<div className="flex_row_center flex_vertical_middle">
+				<img style={{
+					display: 'block',
+					margin: 'auto 20px',
+					maxWidth: '300px',
+				}} id="collectCode0" src="" alt=""/>
+				<img style={{
+					display: 'block',
+					margin: 'auto 20px',
+					maxWidth: '300px',
+				}} id="collectCode1" src="" alt=""/>
+			</div>
 		</div>);
 	}
 }
